@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text, View, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { SafeAreaView, View, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { Text } from 'react-native-paper';
 import { logo } from '../../../assets';
 
 function Index(props) {
@@ -45,7 +46,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   versionText: {
-    fontWeight: 'bold',
     fontSize: 20,
     color: 'white',
   },

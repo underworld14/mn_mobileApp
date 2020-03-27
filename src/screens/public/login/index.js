@@ -1,15 +1,21 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 function Index({ navigation }) {
+  const [hide, setHide] = useState(true);
+  const [eye, setEye] = useState('eye');
+
+  const visiblePassword = () => {
+    setHide(!hide);
+    setEye(eye === 'eye' ? 'eye-slash' : 'eye');
+  };
+
+  // const login = () => {
+  //   navigation.navigate('Home');
+  // };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.titleWrapper}>
@@ -17,9 +23,16 @@ function Index({ navigation }) {
         <Text style={styles.title}> Management </Text>
       </View>
       <View style={styles.loginWrapper}>
-        <View style={styles.inputWrapper}>
-          <TextInput style={{ ...styles.input, marginBottom: 20 }} placeholder="Email" />
-          <TextInput style={styles.input} placeholder="Password" />
+        <View style={styles.inputContainer}>
+          <View style={styles.inputWrapper}>
+            <TextInput style={styles.input} placeholder="Email" />
+          </View>
+          <View style={styles.inputWrapper}>
+            <TextInput style={styles.input} secureTextEntry={hide} placeholder="Password" />
+            <TouchableOpacity onPress={visiblePassword}>
+              <Icon name={eye} size={20} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
         </View>
         <TouchableOpacity style={styles.forgotWrapper}>
           <Text style={styles.forgot}> Lupa password ! </Text>
@@ -55,22 +68,34 @@ const styles = StyleSheet.create({
   loginWrapper: {
     flex: 1.2,
     backgroundColor: '#26C281',
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  inputWrapper: {
+  inputContainer: {
     width: '85%',
-    marginBottom: 20,
+    marginBottom: 10,
   },
-  input: {
-    height: 62,
-    paddingHorizontal: 20,
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'white',
-    fontSize: 18,
+    marginBottom: 20,
     borderRadius: 15,
     elevation: 3,
+  },
+  input: {
+    flex: 1,
+    height: 60,
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    borderRadius: 15,
+  },
+  icon: {
+    paddingHorizontal: 20,
   },
   btnWrapper: {
     flexDirection: 'row',
@@ -96,14 +121,15 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 18,
   },
-  forgotWrapper: { width: '85%', marginBottom: 25 },
+  forgotWrapper: {
+    width: '85%',
+    marginBottom: 25,
+  },
   forgot: {
     color: 'white',
-    fontWeight: '400',
     fontSize: 14,
   },
   signUpTxt: {
-    fontWeight: 'bold',
     fontSize: 18,
     textAlign: 'left',
     color: 'white',
