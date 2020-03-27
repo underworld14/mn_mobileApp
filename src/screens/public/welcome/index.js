@@ -1,15 +1,14 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
-import {logo} from '../../../assets';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, Text, View, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { logo } from '../../../assets';
 
-function Index() {
+function Index(props) {
+  useEffect(() => {
+    setTimeout(() => {
+      props.navigation.navigate('Login');
+    }, 3000);
+  }, [props.navigation]);
+
   return (
     <>
       <SafeAreaView style={styles.container}>
