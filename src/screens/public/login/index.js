@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, ActivityIndicator } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 function Index({ navigation }) {
   const [hide, setHide] = useState(true);
   const [eye, setEye] = useState('eye');
+  const [disabled, setDisable] = useState(false);
 
   const visiblePassword = () => {
     setHide(!hide);
     setEye(eye === 'eye' ? 'eye-slash' : 'eye');
   };
 
-  // const login = () => {
-  //   navigation.navigate('Home');
-  // };
+  const login = () => {
+    setDisable(true);
+    setTimeout(() => {
+      setDisable(false);
+    }, 3000);
+    // navigation.navigate('Home');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,8 +46,12 @@ function Index({ navigation }) {
           <TouchableOpacity style={styles.signUpBtn}>
             <Text style={styles.signUpTxt}> Daftar </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.loginBtn}>
-            <Text style={styles.loginTxt}> Masuk </Text>
+          <TouchableOpacity style={styles.loginBtn} disabled={disabled} onPress={login}>
+            {disabled ? (
+              <ActivityIndicator color="black" />
+            ) : (
+              <Text style={styles.loginTxt}> Masuk </Text>
+            )}
             <Icon name="arrow-right" size={18} />
           </TouchableOpacity>
         </View>
