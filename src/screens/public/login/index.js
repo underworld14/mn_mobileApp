@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
-import { Text, ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
+import Text from '../../../components/elements/text';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 function Index({ navigation }) {
@@ -24,8 +25,12 @@ function Index({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.titleWrapper}>
-        <Text style={styles.title}> Madinatunnajah Guidance </Text>
-        <Text style={styles.title}> Management </Text>
+        <Text size={26} type="semibold">
+          Madinatunnajah Guidance
+        </Text>
+        <Text size={26} type="semibold">
+          Management
+        </Text>
       </View>
       <View style={styles.loginWrapper}>
         <View style={styles.inputContainer}>
@@ -40,18 +45,18 @@ function Index({ navigation }) {
           </View>
         </View>
         <TouchableOpacity style={styles.forgotWrapper}>
-          <Text style={styles.forgot}> Lupa password ! </Text>
+          <Text size={14} color="white">
+            Lupa password !
+          </Text>
         </TouchableOpacity>
         <View style={styles.btnWrapper}>
           <TouchableOpacity style={styles.signUpBtn}>
-            <Text style={styles.signUpTxt}> Daftar </Text>
+            <Text size={18} color="white">
+              Daftar
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.loginBtn} disabled={disabled} onPress={login}>
-            {disabled ? (
-              <ActivityIndicator color="black" />
-            ) : (
-              <Text style={styles.loginTxt}> Masuk </Text>
-            )}
+            {disabled ? <ActivityIndicator color="black" /> : <Text size={18}> Masuk </Text>}
             <Icon name="arrow-right" size={18} />
           </TouchableOpacity>
         </View>
@@ -69,10 +74,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginHorizontal: 24,
-  },
-  title: {
-    fontSize: 26,
-    fontFamily: 'Poppins-SemiBold',
   },
   loginWrapper: {
     flex: 1.2,
@@ -126,22 +127,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loginTxt: {
-    fontWeight: '400',
-    fontSize: 18,
-  },
   forgotWrapper: {
     width: '85%',
     marginBottom: 25,
-  },
-  forgot: {
-    color: 'white',
-    fontSize: 14,
-  },
-  signUpTxt: {
-    fontSize: 18,
-    textAlign: 'left',
-    color: 'white',
   },
 });
 

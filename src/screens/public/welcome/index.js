@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, View, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import { Text } from 'react-native-paper';
+// import { Text } from 'react-native-paper';
 import { logo } from '../../../assets';
+import Text from '../../../components/elements/text';
 
 function Index(props) {
   useEffect(() => {
@@ -18,7 +19,9 @@ function Index(props) {
           <ActivityIndicator size="large" color="white" />
         </View>
         <View style={styles.textWrapper}>
-          <Text style={styles.versionText}> v1.0.0 </Text>
+          <Text size={12} color="white">
+            v1.0.0
+          </Text>
         </View>
       </SafeAreaView>
     </>
@@ -46,7 +49,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   versionText: {
-    fontSize: 20,
     color: 'white',
   },
 });

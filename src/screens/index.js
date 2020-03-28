@@ -1,10 +1,12 @@
 import 'react-native-gesture-handler';
 
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 // tab bar icons
 import { tabIcon } from '../assets';
@@ -21,7 +23,7 @@ import AccountScreen from './account';
 function HomeStackScreen() {
   const HomeStack = createStackNavigator();
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator headerMode={false}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
     </HomeStack.Navigator>
   );
@@ -49,11 +51,11 @@ const Tab = createBottomTabNavigator();
 const PublicStack = createStackNavigator();
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const auth = useSelector(state => state.auth);
 
   return (
     <NavigationContainer>
-      {isLogin ? (
+      {auth.isLogin ? (
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
@@ -68,13 +70,14 @@ function App() {
               }
 
               // You can return any component that you like here!
-              return <Image source={iconName} style={{ width: 38, height: 38 }} />;
+              return <Image source={iconName} style={{ width: 35, height: 35 }} />;
             },
           })}
           tabBarOptions={{
             activeTintColor: '#26C281',
             inactiveTintColor: '#464646',
-            style: { height: 64 },
+            style: { height: hp(6) },
+            labelStyle: { fontFamily: 'Poppins-Regular' },
           }}>
           <Tab.Screen name="Home" component={HomeStackScreen} />
           <Tab.Screen name="Dashboard" component={DashboardStackScreen} />
