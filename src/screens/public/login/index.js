@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { SafeAreaView, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import Text from '../../../components/elements/text';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+// actions
+import * as authAct from '../../../store/actions/auth';
+
 function Index({ navigation }) {
   const [hide, setHide] = useState(true);
-  const [eye, setEye] = useState('eye');
   const [disabled, setDisable] = useState(false);
+  const [email, setEmail] = useState(null);
+  const dispatch = useDispatch();
 
   const visiblePassword = () => {
     setHide(!hide);
-    setEye(eye === 'eye' ? 'eye-slash' : 'eye');
   };
 
   const login = () => {
     setDisable(true);
     setTimeout(() => {
-      setDisable(false);
-    }, 3000);
-    // navigation.navigate('Home');
+      dispatch(authAct.login(email));
+    }, 2000);
   };
 
   return (
@@ -35,12 +38,16 @@ function Index({ navigation }) {
       <View style={styles.loginWrapper}>
         <View style={styles.inputContainer}>
           <View style={styles.inputWrapper}>
-            <TextInput style={styles.input} placeholder="Email" />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              onChangeText={value => setEmail(value)}
+            />
           </View>
           <View style={styles.inputWrapper}>
             <TextInput style={styles.input} secureTextEntry={hide} placeholder="Password" />
             <TouchableOpacity onPress={visiblePassword}>
-              <Icon name={eye} size={20} style={styles.icon} />
+              <Icon name={hide ? 'eye' : 'eye-slash'} size={20} style={styles.icon} />
             </TouchableOpacity>
           </View>
         </View>

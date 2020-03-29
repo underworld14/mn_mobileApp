@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   box: {
     width: 10,
     height: 10,
-
     marginHorizontal: 5,
   },
   subTitle: {

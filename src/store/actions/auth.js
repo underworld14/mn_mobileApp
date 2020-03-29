@@ -3,3 +3,9 @@ export const login = email => {
     dispatch({ type: 'LOGIN_FULFILLED', payload: { email } });
   };
 };
+
+export const logOut = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: 'LOGOUT' });
+  };
+};
