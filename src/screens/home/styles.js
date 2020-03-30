@@ -8,6 +8,7 @@ import color from '../../theme/color';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   toCenter: {
     justifyContent: 'center',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
   },
-  infoTitleWrapper: {
+  titleWrapper: {
     width: '90%',
   },
   profileWrapper: {
@@ -51,6 +52,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
+  },
+  menuContainer: {
+    width: wp(90),
+    marginTop: 20,
+    alignSelf: 'center',
+  },
+  menuWrapper: {
+    marginTop: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '90%',
+    justifyContent: 'space-between',
   },
 });
 
