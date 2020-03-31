@@ -1,21 +1,21 @@
 import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
-import { Text } from 'react-native-paper';
-import PropTypes from 'prop-types';
+import { StyleSheet, Dimensions, Text } from 'react-native';
 import { RFValue as fs } from 'react-native-responsive-fontsize';
+import PropTypes from 'prop-types';
 
 const { height } = Dimensions.get('window');
 
 function Typography({ type, children, style, size, color }) {
   const textStyles = [
-    type === 'thin' && styles.thin,
+    !type && styles.regular,
     type === 'regular' && styles.regular,
+    type === 'thin' && styles.thin,
     type === 'semibold' && styles.semibold,
     type === 'bold' && styles.bold,
   ];
 
   const textSize = {
-    fontSize: size && fs(size, height),
+    fontSize: size ? fs(size, height) : fs(9, height),
   };
 
   const textColor = {
@@ -24,7 +24,7 @@ function Typography({ type, children, style, size, color }) {
 
   return (
     <>
-      <Text style={[styles.default, textStyles, textSize, textColor, style]}>{children}</Text>
+      <Text style={[textStyles, textSize, textColor, style]}>{children}</Text>
     </>
   );
 }
@@ -38,25 +38,20 @@ Typography.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  default: {
-    fontSize: fs(9, height),
-  },
   thin: {
-    fontSize: fs(9, height),
     fontFamily: 'Poppins-Light',
   },
   regular: {
-    fontSize: fs(9, height),
     fontFamily: 'Poppins-Regular',
   },
   semibold: {
-    fontSize: fs(9, height),
     fontFamily: 'Poppins-SemiBold',
   },
   bold: {
-    fontSize: fs(9, height),
     fontFamily: 'Poppins-Bold',
   },
 });
 
 export default Typography;
+
+export const textSize = size => fs(size, height);

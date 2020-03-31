@@ -20,19 +20,21 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   avatar: {
     backgroundColor: color.info,
   },
   infoBanner: {
     backgroundColor: 'white',
-    height: hp(15),
+    height: hp(14),
     width: wp(90),
     elevation: 4,
     alignSelf: 'center',
     borderRadius: 15,
-    marginTop: -90,
+    marginTop: hp(-10),
     alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 10,
   },
   titleWrapper: {
@@ -40,17 +42,18 @@ const styles = StyleSheet.create({
   },
   profileWrapper: {
     width: wp(90),
-    marginTop: 35,
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: hp(10),
   },
   greetingWrapper: {
-    marginLeft: 15,
+    marginLeft: wp(3),
   },
   infoTotalWrapper: {
     width: '90%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: hp(0.5),
     paddingHorizontal: 20,
   },
   menuContainer: {
@@ -59,11 +62,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   menuWrapper: {
-    marginTop: 10,
+    marginTop: hp(2),
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: '90%',
     justifyContent: 'space-between',
+  },
+  newsContainer: {
+    width: wp(100),
+    alignSelf: 'center',
+  },
+  newsImage: {
+    width: wp(75),
+    height: hp(25),
+    borderRadius: 15,
+  },
+  slidesMargin: {
+    marginTop: hp(2),
   },
 });
 

@@ -5,12 +5,12 @@ import Text from '../../components/elements/text';
 function Total({ title, total, color }) {
   return (
     <View style={styles.toCenter}>
-      <Text size={36} type="semibold">
+      <Text size={28} type="semibold">
         {total}
       </Text>
       <View style={[styles.textWrap, styles.toCenter]}>
         <View style={[styles.box, { backgroundColor: color }]} />
-        <Text style={styles.subTitle} size={14}>
+        <Text style={styles.subTitle} size={12}>
           {title}
         </Text>
       </View>

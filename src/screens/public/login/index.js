@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SafeAreaView, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
-import Text from '../../../components/elements/text';
+import Text, { textSize } from '../../../components/elements/text';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 // actions
@@ -52,7 +52,7 @@ function Index({ navigation }) {
           </View>
         </View>
         <TouchableOpacity style={styles.forgotWrapper}>
-          <Text size={14} color="white">
+          <Text size={12} color="white">
             Lupa password !
           </Text>
         </TouchableOpacity>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     height: 60,
     paddingHorizontal: 20,
     backgroundColor: 'white',
-    fontSize: 16,
+    fontSize: textSize(12),
     fontFamily: 'Poppins-Regular',
     borderRadius: 15,
   },

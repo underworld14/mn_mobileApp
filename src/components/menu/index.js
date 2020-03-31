@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-import Text from '../elements/text';
+import Text, { textSize } from '../elements/text';
 import { menuIcon } from '../../assets';
 
 function index({ name, goTo }) {
@@ -37,7 +38,9 @@ function index({ name, goTo }) {
   return (
     <TouchableOpacity style={styles.toCenter} onPress={goTo}>
       <Image source={source} style={styles.iconSize} />
-      <Text style={styles.menuLabel}> {title} </Text>
+      <Text size={12} style={styles.menuLabel}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -54,12 +57,11 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   iconSize: {
-    width: 57,
-    height: 57,
+    width: wp(12),
+    height: wp(12),
   },
   menuLabel: {
-    marginTop: 10,
-    fontSize: 12,
+    marginTop: 5,
     fontFamily: 'Assistant-Light',
   },
 });

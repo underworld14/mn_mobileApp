@@ -1,12 +1,15 @@
 import 'react-native-gesture-handler';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 // tab bar icons
 import { tabIcon } from '../assets';
@@ -80,13 +83,13 @@ function App() {
             }
 
             // You can return any component that you like here!
-            return <Image source={iconName} style={{ width: 35, height: 35 }} />;
+            return <Image source={iconName} style={{ width: wp(7), height: wp(7) }} />;
           },
         })}
         tabBarOptions={{
           activeTintColor: '#26C281',
           inactiveTintColor: '#464646',
-          style: { height: hp(6) },
+          style: { height: hp(7) },
           labelStyle: { fontFamily: 'Poppins-Regular' },
         }}>
         <Tab.Screen name="Home" component={HomeStackScreen} />
