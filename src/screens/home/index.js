@@ -1,9 +1,9 @@
 import React from 'react';
 import { SafeAreaView, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-paper';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Carousel from 'react-native-snap-carousel';
 
+import { wp } from '../../components/responsive';
 import styles from './styles';
 import Text from '../../components/elements/text';
 import Total from './total';

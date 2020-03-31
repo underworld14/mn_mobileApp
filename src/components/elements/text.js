@@ -1,9 +1,7 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Text } from 'react-native';
-import { RFValue as fs } from 'react-native-responsive-fontsize';
+import { StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
-
-const { height } = Dimensions.get('window');
+import { fs } from '../responsive';
 
 function Typography({ type, children, style, size, color }) {
   const textStyles = [
@@ -15,7 +13,7 @@ function Typography({ type, children, style, size, color }) {
   ];
 
   const textSize = {
-    fontSize: size ? fs(size, height) : fs(9, height),
+    fontSize: size ? fs(size) : fs(9),
   };
 
   const textColor = {
@@ -53,5 +51,3 @@ const styles = StyleSheet.create({
 });
 
 export default Typography;
-
-export const textSize = size => fs(size, height);

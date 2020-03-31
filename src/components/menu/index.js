@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-import Text, { textSize } from '../elements/text';
+import Text from '../elements/text';
 import { menuIcon } from '../../assets';
 
 function index({ name, goTo }) {

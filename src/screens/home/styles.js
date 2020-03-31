@@ -1,8 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import { wp, hp } from '../../components/responsive';
 import color from '../../theme/color';
 
 const styles = StyleSheet.create({
