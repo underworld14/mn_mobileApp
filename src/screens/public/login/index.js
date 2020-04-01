@@ -13,6 +13,7 @@ function Index({ navigation }) {
   const [hide, setHide] = useState(true);
   const [disabled, setDisable] = useState(false);
   const [email, setEmail] = useState(null);
+
   const dispatch = useDispatch();
 
   const visiblePassword = () => {
@@ -26,13 +27,17 @@ function Index({ navigation }) {
     }, 2000);
   };
 
+  const toForgot = () => {
+    navigation.navigate('Forgot');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.titleWrapper}>
-        <Text size={26} type="semibold">
+        <Text size={24} type="semibold">
           Madinatunnajah Guidance
         </Text>
-        <Text size={26} type="semibold">
+        <Text size={24} type="semibold">
           Management
         </Text>
       </View>
@@ -42,29 +47,35 @@ function Index({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Email"
+              editable={!disabled}
               onChangeText={value => setEmail(value)}
             />
           </View>
           <View style={styles.inputWrapper}>
-            <TextInput style={styles.input} secureTextEntry={hide} placeholder="Password" />
+            <TextInput
+              style={styles.input}
+              editable={!disabled}
+              secureTextEntry={hide}
+              placeholder="Password"
+            />
             <TouchableOpacity onPress={visiblePassword}>
               <Icon name={hide ? 'eye' : 'eye-slash'} size={20} style={styles.icon} />
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity style={styles.forgotWrapper}>
+        <TouchableOpacity style={styles.forgotWrapper} onPress={toForgot}>
           <Text size={12} color="white">
             Lupa password !
           </Text>
         </TouchableOpacity>
         <View style={styles.btnWrapper}>
           <TouchableOpacity style={styles.signUpBtn}>
-            <Text size={18} color="white">
+            <Text size={16} color="white">
               Daftar
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.loginBtn} disabled={disabled} onPress={login}>
-            {disabled ? <ActivityIndicator color="black" /> : <Text size={18}> Masuk </Text>}
+            {disabled ? <ActivityIndicator color="black" /> : <Text size={16}> Masuk </Text>}
             <Icon name="arrow-right" size={18} />
           </TouchableOpacity>
         </View>

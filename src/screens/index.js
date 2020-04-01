@@ -17,6 +17,7 @@ import { tabIcon } from '../assets';
 // public screen
 import LoginScreen from './public/login';
 import WelcomeScreen from './public/welcome';
+import ForgotScreen from './public/forgot';
 
 // protected screen
 import HomeScreen from './home';
@@ -62,6 +63,7 @@ function App() {
         <PublicStack.Navigator initialRouteName="Welcome" headerMode={false}>
           <PublicStack.Screen name="Welcome" component={WelcomeScreen} />
           <PublicStack.Screen name="Login" component={LoginScreen} />
+          <PublicStack.Screen name="Forgot" component={ForgotScreen} />
         </PublicStack.Navigator>
       </NavigationContainer>
     );

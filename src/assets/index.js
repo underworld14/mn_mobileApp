@@ -15,6 +15,9 @@ import permission from './menu/perizinan.png';
 import violation from './menu/pelanggaran.png';
 import illness from './menu/sakit.png';
 
+// general image
+import forgot from './image/not-found.png';
+
 export const logo = mnLogo;
 
 export const tabIcon = {
@@ -31,4 +34,8 @@ export const menuIcon = {
   permission,
   violation,
   illness,
+};
+
+export const image = {
+  forgot,
 };
