@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, View, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { Avatar } from 'react-native-paper';
+import { Avatar, Portal } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 
 import { wp } from '../../components/responsive';
@@ -9,24 +9,35 @@ import Text from '../../components/elements/text';
 import Total from './total';
 import HomeMenu from '../../components/menu';
 import Divider from '../../components/divider';
+import SetPinModal from '../../components/setPinModal';
+
+const newsEntries = [
+  {
+    title: 'Ramadhan telah tiba !',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQVrVKUa22DGrNuCYzMNa4w-x_GRkKaGiFaWXjOOfL-l9ZNRQx&usqp=CAU',
+  },
+  {
+    title: 'Ramadhan telah tiba !',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQVrVKUa22DGrNuCYzMNa4w-x_GRkKaGiFaWXjOOfL-l9ZNRQx&usqp=CAU',
+  },
+  {
+    title: 'Ramadhan telah tiba !',
+    image: 'https://i.ytimg.com/vi/yTzEFNhEYLw/maxresdefault.jpg',
+  },
+];
 
 function HomeScreen({ navigation }) {
-  const newsEntries = [
-    {
-      title: 'Ramadhan telah tiba !',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQVrVKUa22DGrNuCYzMNa4w-x_GRkKaGiFaWXjOOfL-l9ZNRQx&usqp=CAU',
-    },
-    {
-      title: 'Ramadhan telah tiba !',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQVrVKUa22DGrNuCYzMNa4w-x_GRkKaGiFaWXjOOfL-l9ZNRQx&usqp=CAU',
-    },
-    {
-      title: 'Ramadhan telah tiba !',
-      image: 'https://i.ytimg.com/vi/yTzEFNhEYLw/maxresdefault.jpg',
-    },
-  ];
+  const [pinModal, setPinModal] = useState(false);
+
+  const _onOpen = () => {
+    setPinModal(true);
+  };
+
+  const _onDismiss = () => {
+    setPinModal(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -69,7 +80,7 @@ function HomeScreen({ navigation }) {
             </Text>
           </View>
           <View style={styles.menuWrapper}>
-            <HomeMenu name="student" />
+            <HomeMenu name="student" goTo={_onOpen} />
             <HomeMenu name="permission" />
             <HomeMenu name="illness" />
             <HomeMenu name="violation" />
@@ -95,6 +106,11 @@ function HomeScreen({ navigation }) {
           />
         </View>
       </ScrollView>
+
+      {/* unvisible render */}
+      <Portal>
+        <SetPinModal visible={pinModal} onClose={_onDismiss} />
+      </Portal>
     </SafeAreaView>
   );
 }
