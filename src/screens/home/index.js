@@ -31,7 +31,6 @@ function HomeScreen(props) {
     setPinModal(false);
   };
 
-  console.log(props.news);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.basicBanner}>
