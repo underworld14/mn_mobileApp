@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { SafeAreaView, View, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { Avatar, Portal } from 'react-native-paper';
+import { Avatar, Portal, Snackbar } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 
 import { wp } from '../../components/responsive';
@@ -11,34 +12,26 @@ import HomeMenu from '../../components/menu';
 import Divider from '../../components/divider';
 import SetPinModal from '../../components/setPinModal';
 
-const newsEntries = [
-  {
-    title: 'Ramadhan telah tiba !',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQVrVKUa22DGrNuCYzMNa4w-x_GRkKaGiFaWXjOOfL-l9ZNRQx&usqp=CAU',
-  },
-  {
-    title: 'Ramadhan telah tiba !',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQVrVKUa22DGrNuCYzMNa4w-x_GRkKaGiFaWXjOOfL-l9ZNRQx&usqp=CAU',
-  },
-  {
-    title: 'Ramadhan telah tiba !',
-    image: 'https://i.ytimg.com/vi/yTzEFNhEYLw/maxresdefault.jpg',
-  },
-];
+// actions...
+import * as authAct from '../../store/actions/auth';
 
-function HomeScreen({ navigation }) {
+function HomeScreen(props) {
   const [pinModal, setPinModal] = useState(false);
+  const [pinWarn, setPinWarn] = useState(false);
 
-  const _onOpen = () => {
-    setPinModal(true);
-  };
+  useEffect(() => {
+    if (!props.auth.pin) {
+      setPinModal(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const _onDismiss = () => {
+  const registerUserPin = async pin => {
+    await props.dispatch(authAct.setPinUser(pin));
     setPinModal(false);
   };
 
+  console.log(props.news);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.basicBanner}>
@@ -80,7 +73,7 @@ function HomeScreen({ navigation }) {
             </Text>
           </View>
           <View style={styles.menuWrapper}>
-            <HomeMenu name="student" goTo={_onOpen} />
+            <HomeMenu name="student" r />
             <HomeMenu name="permission" />
             <HomeMenu name="illness" />
             <HomeMenu name="violation" />
@@ -98,7 +91,7 @@ function HomeScreen({ navigation }) {
             </Text>
           </View>
           <Carousel
-            data={newsEntries}
+            data={props.news.data}
             sliderWidth={wp(100)}
             itemWidth={styles.newsImage.width}
             containerCustomStyle={styles.slidesMargin}
@@ -107,9 +100,21 @@ function HomeScreen({ navigation }) {
         </View>
       </ScrollView>
 
+      <Snackbar
+        style={styles.snackBar}
+        visible={pinWarn}
+        duration={3000}
+        onDismiss={() => setPinWarn(false)}>
+        Tolong Masukkan Pin Baru anda terlebih dahulu !
+      </Snackbar>
+
       {/* unvisible render */}
       <Portal>
-        <SetPinModal visible={pinModal} onClose={_onDismiss} />
+        <SetPinModal
+          visible={pinModal}
+          onClose={() => setPinWarn(true)}
+          onSubmit={pin => registerUserPin(pin)}
+        />
       </Portal>
     </SafeAreaView>
   );
@@ -126,4 +131,9 @@ function renderCarousel({ item, index }) {
   );
 }
 
-export default HomeScreen;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  news: state.news,
+});
+
+export default connect(mapStateToProps)(HomeScreen);

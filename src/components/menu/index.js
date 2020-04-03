@@ -6,7 +6,7 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Text from '../elements/text';
 import { menuIcon } from '../../assets';
 
-function index({ name, goTo }) {
+function index({ name, action }) {
   let source;
   let title;
 
@@ -36,7 +36,7 @@ function index({ name, goTo }) {
   }
 
   return (
-    <TouchableOpacity style={styles.toCenter} onPress={goTo}>
+    <TouchableOpacity style={styles.toCenter} onPress={action}>
       <Image source={source} style={styles.iconSize} />
       <Text size={12} style={styles.menuLabel}>
         {title}
@@ -47,7 +47,7 @@ function index({ name, goTo }) {
 
 index.propTypes = {
   name: PropTypes.oneOf(['student', 'permission', 'illness', 'violation']).isRequired,
-  goTo: PropTypes.func,
+  action: PropTypes.func,
 };
 
 const styles = StyleSheet.create({

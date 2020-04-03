@@ -77,6 +77,9 @@ const styles = StyleSheet.create({
   slidesMargin: {
     marginTop: hp(2),
   },
+  snackBar: {
+    backgroundColor: color.primary,
+  },
 });
 
 export default styles;

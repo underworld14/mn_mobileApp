@@ -9,3 +9,9 @@ export const logOut = () => {
     dispatch({ type: 'LOGOUT' });
   };
 };
+
+export const setPinUser = pin => {
+  return (dispatch, getState) => {
+    dispatch({ type: 'SET_PIN', payload: pin });
+  };
+};

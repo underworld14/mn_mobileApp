@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { fs } from '../responsive';
 
-function Typography({ type, children, style, size, color }) {
+function Typography({ type, children, style, size, color, align }) {
   const textStyles = [
     !type && styles.regular,
     type === 'regular' && styles.regular,
@@ -11,6 +11,10 @@ function Typography({ type, children, style, size, color }) {
     type === 'semibold' && styles.semibold,
     type === 'bold' && styles.bold,
   ];
+
+  const alignText = {
+    textAlign: align ? align : 'left',
+  };
 
   const textSize = {
     fontSize: size ? fs(size) : fs(9),
@@ -22,7 +26,7 @@ function Typography({ type, children, style, size, color }) {
 
   return (
     <>
-      <Text style={[textStyles, textSize, textColor, style]}>{children}</Text>
+      <Text style={[textStyles, textSize, textColor, alignText, style]}>{children}</Text>
     </>
   );
 }
@@ -30,6 +34,7 @@ function Typography({ type, children, style, size, color }) {
 Typography.propTypes = {
   children: PropTypes.any.isRequired,
   type: PropTypes.oneOf(['thin', 'regular', 'semibold', 'bold']),
+  align: PropTypes.oneOf(['left', 'center', 'right']),
   style: PropTypes.object,
   size: PropTypes.number,
   color: PropTypes.string,

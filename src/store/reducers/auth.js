@@ -3,6 +3,7 @@ let initialState = {
   isError: false,
   isLogin: false,
   token: '',
+  userPin: '',
   credentials: {},
 };
 
@@ -28,7 +29,20 @@ export default (state = initialState, action) => {
         ...state,
         isLogin: false,
         token: '',
+        pin: '',
         credentials: {},
+      };
+
+    case 'SET_PIN':
+      return {
+        ...state,
+        pin: action.payload,
+      };
+
+    case 'REMOVE_PIN':
+      return {
+        ...state,
+        pin: '',
       };
 
     default: {

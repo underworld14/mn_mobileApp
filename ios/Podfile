@@ -35,7 +35,6 @@ target 'mnmobile' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
   target 'mnmobileTests' do
     inherit! :search_paths
