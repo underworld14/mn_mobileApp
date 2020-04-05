@@ -33,20 +33,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLogin: false,
-        pin: '',
+        userPin: '',
         credentials: {},
       };
 
     case 'SET_PIN':
       return {
         ...state,
-        pin: action.payload,
+        userPin: action.payload,
       };
 
     case 'REMOVE_PIN':
       return {
         ...state,
-        pin: '',
+        userPin: '',
       };
 
     default: {

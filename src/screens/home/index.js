@@ -7,6 +7,7 @@ import Carousel from 'react-native-snap-carousel';
 import { wp } from '../../components/responsive';
 import styles from './styles';
 import Text from '../../components/elements/text';
+import MyStatusBar from '../../components/statusbar';
 import Total from './total';
 import HomeMenu from '../../components/menu';
 import Divider from '../../components/divider';
@@ -20,7 +21,7 @@ function HomeScreen(props) {
   const [pinWarn, setPinWarn] = useState(false);
 
   useEffect(() => {
-    if (!props.auth.pin) {
+    if (!props.auth.userPin) {
       setPinModal(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,6 +34,7 @@ function HomeScreen(props) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <MyStatusBar />
       <View style={styles.basicBanner}>
         {/* profile wrapper */}
         <View style={styles.profileWrapper}>

@@ -23,7 +23,13 @@ function Index(props) {
   };
 
   const login = () => {
-    dispatch(authAct.login(form)).catch(() => setAuthWarn(true));
+    if (form.password && form.email) {
+      dispatch(authAct.login(form)).catch(() => {
+        setAuthWarn(true);
+      });
+    } else {
+      setAuthWarn(true);
+    }
   };
 
   const toForgot = () => {
@@ -91,7 +97,11 @@ function Index(props) {
         type="danger"
         visible={authWarn}
         onDismiss={() => setAuthWarn(false)}
-        message="Password atau email yang anda masukkan salah !"
+        message={
+          form.password && form.email
+            ? 'Password atau email yang anda masukkan salah !'
+            : 'Masukkan Password dan email terlebih dahulu !'
+        }
       />
     </SafeAreaView>
   );
