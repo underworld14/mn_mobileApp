@@ -1,8 +1,6 @@
 let initialState = {
   isLoading: false,
-  isError: false,
   isLogin: false,
-  token: '',
   userPin: '',
   credentials: {},
 };
@@ -24,11 +22,17 @@ export default (state = initialState, action) => {
         credentials: action.payload,
       };
 
+    case 'LOGIN_REJECTED':
+      return {
+        ...state,
+        isLogin: false,
+        isLoading: false,
+      };
+
     case 'LOGOUT':
       return {
         ...state,
         isLogin: false,
-        token: '',
         pin: '',
         credentials: {},
       };

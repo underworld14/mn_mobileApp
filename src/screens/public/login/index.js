@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { SafeAreaView, View, TouchableOpacity, TextInput } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
+
 import Text from '../../../components/elements/text';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
+import MySnackBar from '../../../components/mySnackBar';
+import MyStatusBar from '../../../components/statusbar';
 
 // actions
 import * as authAct from '../../../store/actions/auth';
 
-function Index({ navigation }) {
+function Index(props) {
+  const [form, setForm] = useState({ email: '', password: '' });
   const [hide, setHide] = useState(true);
-  const [disabled, setDisable] = useState(false);
-  const [email, setEmail] = useState(null);
-
-  const dispatch = useDispatch();
+  const [authWarn, setAuthWarn] = useState(false);
+  const { auth, dispatch } = props;
 
   const visiblePassword = () => {
     setHide(!hide);
   };
 
   const login = () => {
-    setDisable(true);
-    setTimeout(() => {
-      dispatch(authAct.login(email));
-    }, 2000);
+    dispatch(authAct.login(form)).catch(() => setAuthWarn(true));
   };
 
   const toForgot = () => {
-    navigation.navigate('Forgot');
+    props.navigation.navigate('Forgot');
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <MyStatusBar color="white" dark />
       <View style={styles.titleWrapper}>
         <Text size={24} type="semibold">
           Madinatunnajah Guidance
@@ -47,16 +47,19 @@ function Index({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Email"
-              editable={!disabled}
-              onChangeText={value => setEmail(value)}
+              editable={!auth.isLoading}
+              value={form.email}
+              onChangeText={val => setForm({ ...form, email: val })}
             />
           </View>
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
-              editable={!disabled}
+              editable={!auth.isLoading}
               secureTextEntry={hide}
               placeholder="Password"
+              value={form.password}
+              onChangeText={val => setForm({ ...form, password: val })}
             />
             <TouchableOpacity onPress={visiblePassword}>
               <Icon name={hide ? 'eye' : 'eye-slash'} size={20} style={styles.icon} />
@@ -74,14 +77,28 @@ function Index({ navigation }) {
               Daftar
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.loginBtn} disabled={disabled} onPress={login}>
-            {disabled ? <ActivityIndicator color="black" /> : <Text size={16}> Masuk </Text>}
+          <TouchableOpacity style={styles.loginBtn} disabled={auth.isLoading} onPress={login}>
+            {auth.isLoading ? (
+              <ActivityIndicator color="black" />
+            ) : (
+              <Text size={16}> Masuk </Text>
+            )}
             <Icon name="arrow-right" size={18} />
           </TouchableOpacity>
         </View>
       </View>
+      <MySnackBar
+        type="danger"
+        visible={authWarn}
+        onDismiss={() => setAuthWarn(false)}
+        message="Password atau email yang anda masukkan salah !"
+      />
     </SafeAreaView>
   );
 }
 
-export default Index;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Index);

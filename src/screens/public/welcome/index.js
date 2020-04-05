@@ -3,6 +3,7 @@ import { SafeAreaView, View, StyleSheet, Image, ActivityIndicator } from 'react-
 // import { Text } from 'react-native-paper';
 import { logo } from '../../../assets';
 import Text from '../../../components/elements/text';
+import MyStatusBar from '../../../components/statusbar';
 
 function Index(props) {
   useEffect(() => {
@@ -14,6 +15,7 @@ function Index(props) {
   return (
     <>
       <SafeAreaView style={styles.container}>
+        <MyStatusBar dark />
         <View style={styles.imageWrapper}>
           <Image source={logo} style={styles.image} />
           <ActivityIndicator size="large" color="white" />
