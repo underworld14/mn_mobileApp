@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { SafeAreaView, View, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { Avatar, Portal, Snackbar } from 'react-native-paper';
+import { Avatar, Portal } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 
 import { wp } from '../../components/responsive';
@@ -12,31 +12,33 @@ import Total from './total';
 import HomeMenu from '../../components/menu';
 import Divider from '../../components/divider';
 import SetPinModal from '../../components/setPinModal';
+import MySnackBar from '../../components/mySnackBar';
 import { capitalizeWord, nameAlias } from '../../utils/string';
 
 // actions...
 import * as authAct from '../../store/actions/auth';
 import * as newsAct from '../../store/actions/news';
+import * as studentAct from '../../store/actions/student';
 
 function HomeScreen(props) {
   const [pinModal, setPinModal] = useState(false);
   const [pinWarn, setPinWarn] = useState(false);
-  const { auth } = props;
+  const { auth, dispatch, summary } = props;
 
   useEffect(() => {
     initialLoadScreen();
-    if (!props.auth.userPin) {
+    if (!auth.userPin) {
       setPinModal(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initialLoadScreen = async () => {
-    await props.dispatch(newsAct.get());
+    await Promise.all([dispatch(newsAct.get()), dispatch(studentAct.getSummary())]);
   };
 
   const registerUserPin = async pin => {
-    await props.dispatch(authAct.setPinUser(pin));
+    await dispatch(authAct.setPinUser(pin));
     setPinModal(false);
   };
 
@@ -69,9 +71,9 @@ function HomeScreen(props) {
           </Text>
         </View>
         <View style={styles.infoTotalWrapper}>
-          <Total title="Siswa Aktif" total={298} color="green" />
-          <Total title="Siswa Izin" total={17} color="yellow" />
-          <Total title="Siswa Sakit" total={9} color="tomato" />
+          <Total title="Siswa Aktif" total={summary.students} type="primary" />
+          <Total title="Siswa Izin" total={summary.permissions} type="info" />
+          <Total title="Siswa Sakit" total={summary.illnesses} type="warning" />
         </View>
       </View>
 
@@ -85,7 +87,7 @@ function HomeScreen(props) {
             </Text>
           </View>
           <View style={styles.menuWrapper}>
-            <HomeMenu name="student" r />
+            <HomeMenu name="student" />
             <HomeMenu name="permission" />
             <HomeMenu name="illness" />
             <HomeMenu name="violation" />
@@ -112,13 +114,12 @@ function HomeScreen(props) {
         </View>
       </ScrollView>
 
-      <Snackbar
-        style={styles.snackBar}
+      <MySnackBar
+        type="warning"
         visible={pinWarn}
-        duration={3000}
-        onDismiss={() => setPinWarn(false)}>
-        Tolong Masukkan Pin Baru anda terlebih dahulu !
-      </Snackbar>
+        onDismiss={() => setPinWarn(false)}
+        message="Tolong Masukkan Pin Baru anda terlebih dahulu !"
+      />
 
       {/* unvisible render */}
       <Portal>
@@ -146,6 +147,7 @@ function renderCarousel({ item, index }) {
 const mapStateToProps = state => ({
   auth: state.auth,
   news: state.news,
+  summary: state.student.summary,
 });
 
 export default connect(mapStateToProps)(HomeScreen);

@@ -1,15 +1,17 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import Text from '../../components/elements/text';
+import color from '../../theme/color';
 
-function Total({ title, total, color }) {
+function Total({ title, total, type }) {
   return (
     <View style={styles.toCenter}>
       <Text size={28} type="semibold">
         {total}
       </Text>
       <View style={[styles.textWrap, styles.toCenter]}>
-        <View style={[styles.box, { backgroundColor: color }]} />
+        <View style={[styles.box, { backgroundColor: color[type] }]} />
         <Text style={styles.subTitle} size={12}>
           {title}
         </Text>
@@ -17,6 +19,12 @@ function Total({ title, total, color }) {
     </View>
   );
 }
+
+Total.propTypes = {
+  title: PropTypes.string,
+  total: PropTypes.number,
+  type: PropTypes.string,
+};
 
 const styles = StyleSheet.create({
   toCenter: {
@@ -32,7 +40,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   subTitle: {
-    fontFamily: 'Assistant-Light',
+    fontFamily: 'Assistant-Regular',
   },
 });
 

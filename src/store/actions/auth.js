@@ -1,11 +1,5 @@
 import api from '../../services/api';
-
-const types = (type, payload) => {
-  return {
-    type,
-    payload,
-  };
-};
+import types from './types';
 
 export const login = form => {
   return (dispatch, getState) => {

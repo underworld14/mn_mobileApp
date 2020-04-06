@@ -1,19 +1,19 @@
 import api from '../../services/api';
 import types from './types';
 
-export const get = () => {
+export const getSummary = () => {
   return (dispatch, getState) => {
     return new Promise(async (resolve, reject) => {
-      dispatch(types('GET_NEWS_PENDING'));
+      dispatch(types('GET_SUMMARY_PENDING'));
       await api
-        .get('/announcement')
+        .get('/student/summary')
         .then(res => {
           resolve();
-          dispatch(types('GET_NEWS_FULLFILLED', res.data.data));
+          dispatch(types('GET_SUMMARY_FULLFILLED', res.data.data));
         })
         .catch(() => {
           reject();
-          dispatch(types('GET_NEWS_REJECTED'));
+          dispatch(types('GET_SUMMARY_REJECTED'));
         });
     });
   };
