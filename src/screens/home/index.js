@@ -12,25 +12,36 @@ import Total from './total';
 import HomeMenu from '../../components/menu';
 import Divider from '../../components/divider';
 import SetPinModal from '../../components/setPinModal';
+import { capitalizeWord, nameAlias } from '../../utils/string';
 
 // actions...
 import * as authAct from '../../store/actions/auth';
+import * as newsAct from '../../store/actions/news';
 
 function HomeScreen(props) {
   const [pinModal, setPinModal] = useState(false);
   const [pinWarn, setPinWarn] = useState(false);
+  const { auth } = props;
 
   useEffect(() => {
+    initialLoadScreen();
     if (!props.auth.userPin) {
       setPinModal(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const initialLoadScreen = async () => {
+    await props.dispatch(newsAct.get());
+  };
+
   const registerUserPin = async pin => {
     await props.dispatch(authAct.setPinUser(pin));
     setPinModal(false);
   };
+
+  const teacherName = capitalizeWord(auth.credentials.teacher.name);
+  const nick = nameAlias(teacherName);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,13 +49,13 @@ function HomeScreen(props) {
       <View style={styles.basicBanner}>
         {/* profile wrapper */}
         <View style={styles.profileWrapper}>
-          <Avatar.Text size={wp(15)} label="YS" style={styles.avatar} />
+          <Avatar.Text size={wp(15)} label={nick} style={styles.avatar} />
           <View style={styles.greetingWrapper}>
             <Text type="semibold" size={14} color="white">
               Assalamualaikum, Kaifa Khalukum ?
             </Text>
             <Text size={14} color="white">
-              Akh. Yusril Izza Aulia
+              Akh. {teacherName}
             </Text>
           </View>
         </View>
