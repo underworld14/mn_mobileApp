@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { SafeAreaView, View, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { Placeholder, PlaceholderLine, Shine } from 'rn-placeholder';
 import { Avatar, Portal } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 
@@ -13,6 +14,7 @@ import HomeMenu from '../../components/menu';
 import Divider from '../../components/divider';
 import SetPinModal from '../../components/setPinModal';
 import MySnackBar from '../../components/mySnackBar';
+import NewsModal from './newsModal';
 import { capitalizeWord, nameAlias } from '../../utils/string';
 
 // actions...
@@ -23,7 +25,8 @@ import * as studentAct from '../../store/actions/student';
 function HomeScreen(props) {
   const [pinModal, setPinModal] = useState(false);
   const [pinWarn, setPinWarn] = useState(false);
-  const { auth, dispatch, summary } = props;
+  const [newsModal, setNewsModal] = useState(0);
+  const { auth, dispatch, student, news } = props;
 
   useEffect(() => {
     initialLoadScreen();
@@ -40,6 +43,26 @@ function HomeScreen(props) {
   const registerUserPin = async pin => {
     await dispatch(authAct.setPinUser(pin));
     setPinModal(false);
+  };
+
+  const renderCarousel = ({ item, index }) => {
+    if (news.isLoading) {
+      return (
+        <Placeholder Animation={Shine}>
+          <PlaceholderLine style={styles.newsImage} />
+          <PlaceholderLine />
+        </Placeholder>
+      );
+    }
+
+    return (
+      <TouchableOpacity key={index} onPress={() => setNewsModal(item.id)}>
+        <Image source={{ uri: item.image }} style={styles.newsImage} />
+        <Text size={13} style={styles.slidesMargin}>
+          {item.title}
+        </Text>
+      </TouchableOpacity>
+    );
   };
 
   const teacherName = capitalizeWord(auth.credentials.teacher.name);
@@ -71,9 +94,24 @@ function HomeScreen(props) {
           </Text>
         </View>
         <View style={styles.infoTotalWrapper}>
-          <Total title="Siswa Aktif" total={summary.students} type="primary" />
-          <Total title="Siswa Izin" total={summary.permissions} type="info" />
-          <Total title="Siswa Sakit" total={summary.illnesses} type="warning" />
+          <Total
+            title="Siswa Aktif"
+            total={student.summary.students}
+            type="primary"
+            loading={student.isLoading}
+          />
+          <Total
+            title="Siswa Izin"
+            total={student.summary.permissions}
+            type="info"
+            loading={student.isLoading}
+          />
+          <Total
+            title="Siswa Sakit"
+            total={student.summary.illnesses}
+            type="warning"
+            loading={student.isLoading}
+          />
         </View>
       </View>
 
@@ -105,7 +143,7 @@ function HomeScreen(props) {
             </Text>
           </View>
           <Carousel
-            data={props.news.data}
+            data={news.data}
             sliderWidth={wp(100)}
             itemWidth={styles.newsImage.width}
             containerCustomStyle={styles.slidesMargin}
@@ -128,26 +166,18 @@ function HomeScreen(props) {
           onClose={() => setPinWarn(true)}
           onSubmit={pin => registerUserPin(pin)}
         />
+
+        {/* {newsModal && } */}
+        <NewsModal visible={newsModal} onClose={() => setNewsModal(0)} data={news.data} />
       </Portal>
     </SafeAreaView>
-  );
-}
-
-function renderCarousel({ item, index }) {
-  return (
-    <TouchableOpacity key={index}>
-      <Image source={{ uri: item.image }} style={styles.newsImage} />
-      <Text size={13} style={styles.slidesMargin}>
-        {item.title}
-      </Text>
-    </TouchableOpacity>
   );
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
   news: state.news,
-  summary: state.student.summary,
+  student: state.student,
 });
 
 export default connect(mapStateToProps)(HomeScreen);
