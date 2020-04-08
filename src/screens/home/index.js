@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import {
+  SafeAreaView,
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
-import { SafeAreaView, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Placeholder, PlaceholderLine, Shine } from 'rn-placeholder';
 import { Avatar, Portal } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
@@ -8,14 +16,15 @@ import Carousel from 'react-native-snap-carousel';
 import { wp } from '../../components/responsive';
 import styles from './styles';
 import Text from '../../components/elements/text';
-import MyStatusBar from '../../components/statusbar';
 import Total from './total';
 import HomeMenu from '../../components/menu';
 import Divider from '../../components/divider';
 import SetPinModal from '../../components/setPinModal';
 import MySnackBar from '../../components/mySnackBar';
 import NewsModal from './newsModal';
+
 import { capitalizeWord, nameAlias } from '../../utils/string';
+import MyStatusBar from '../../components/statusbarTab';
 
 // actions...
 import * as authAct from '../../store/actions/auth';
@@ -27,6 +36,12 @@ function HomeScreen(props) {
   const [pinWarn, setPinWarn] = useState(false);
   const [newsModal, setNewsModal] = useState(0);
   const { auth, dispatch, student, news } = props;
+
+  useFocusEffect(
+    React.useCallback(() => {
+      MyStatusBar();
+    }, []),
+  );
 
   useEffect(() => {
     initialLoadScreen();
@@ -70,7 +85,6 @@ function HomeScreen(props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <MyStatusBar />
       <View style={styles.basicBanner}>
         {/* profile wrapper */}
         <View style={styles.profileWrapper}>

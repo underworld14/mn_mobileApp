@@ -36,7 +36,7 @@ function HomeStackScreen() {
 function DashboardStackScreen() {
   const DashboardStack = createStackNavigator();
   return (
-    <DashboardStack.Navigator>
+    <DashboardStack.Navigator headerMode={false}>
       <DashboardStack.Screen name="Dashboard" component={DashboardSceeen} />
     </DashboardStack.Navigator>
   );
