@@ -5,6 +5,7 @@ import { Modal } from 'react-native-paper';
 
 import Text from '../../components/elements/text';
 import { wp, hp } from '../../components/responsive';
+import { timeIDShow } from '../../utils/day';
 
 function NewsModal({ visible, onClose, data }) {
   const content = data.filter(val => val.id === visible)[0];
@@ -20,6 +21,8 @@ function NewsModal({ visible, onClose, data }) {
           <Text size={16} type="semibold">
             {content.title}
           </Text>
+          <Text size={10}>oleh {content.user.teacher.name}</Text>
+          <Text>{timeIDShow(content.createdAt)}</Text>
         </View>
         <View style={styles.greetingContainer}>
           <Image source={{ uri: content.image }} style={styles.image} />
@@ -41,7 +44,7 @@ NewsModal.propTypes = {
 const styles = StyleSheet.create({
   modalContainer: {
     width: wp(90),
-    height: hp(50),
+    height: hp(55),
     alignSelf: 'center',
     borderRadius: 10,
     backgroundColor: 'white',
