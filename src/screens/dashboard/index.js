@@ -9,7 +9,7 @@ import styles from './styles';
 
 // tabscreen
 import ClassPages from './tabScreen/classPages';
-import HostelPages from './tabScreen/classPages';
+import HostelPages from './tabScreen/hostelPages';
 
 function HomeScreen() {
   const [index, setIndex] = React.useState(0);

@@ -1,13 +1,13 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 
-import { ClassList } from './listComp';
+import { HostelList } from './listComp';
 
 function HostelPages() {
   return (
     <ScrollView>
-      <ClassList name="2A" supervisor="Muhammad Firman" place="Madinah Building" total={29} />
-      <ClassList name="2A" supervisor="Muhammad Firman" place="Madinah Building" total={29} />
+      <HostelList name="Makkah" supervisor="Muhammad Firman" total={29} loading={false} />
+      <HostelList name="Saudi" supervisor="Muhammad Firman" total={29} />
     </ScrollView>
   );
 }
