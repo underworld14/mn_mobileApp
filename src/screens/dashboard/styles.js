@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { wp, hp } from '../../components/responsive';
+import { wp } from '../../components/responsive';
 import color from '../../theme/color';
 
 const styles = StyleSheet.create({
@@ -28,7 +28,25 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 8,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#F1F1F1',
+  },
+  assistantL: {
+    fontFamily: 'Assistant-Light',
+  },
+  txtGray: {
+    color: '#808080',
+  },
+  txtPrimary: {
+    color: color.primary,
+  },
+
+  // tab
+  tabBackColor: {
+    backgroundColor: 'white',
+    fontFamily: 'Poppins-Regular',
+  },
+  tabIndicator: {
+    backgroundColor: color.primary,
   },
 });
 

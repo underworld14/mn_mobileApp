@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  SafeAreaView,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
+import { SafeAreaView, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { Placeholder, PlaceholderLine, Shine } from 'rn-placeholder';

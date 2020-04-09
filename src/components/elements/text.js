@@ -35,7 +35,6 @@ Typography.propTypes = {
   children: PropTypes.any.isRequired,
   type: PropTypes.oneOf(['thin', 'regular', 'semibold', 'bold']),
   align: PropTypes.oneOf(['left', 'center', 'right']),
-  style: PropTypes.object,
   size: PropTypes.number,
   color: PropTypes.string,
 };
