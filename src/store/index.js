@@ -9,7 +9,7 @@ const persistConfig = {
   // Root
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth', 'news'],
+  whitelist: ['auth', 'news', 'students'],
   blacklist: [''],
 };
 

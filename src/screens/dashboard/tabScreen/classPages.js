@@ -1,21 +1,43 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { ScrollView, RefreshControl } from 'react-native';
+import { connect } from 'react-redux';
+import useRefresh from '../../../components/hooks/useRefresh';
 
+import * as classroomAct from '../../../store/actions/classroom';
 import { ClassList } from './listComp';
 
-function ClassPages() {
+function ClassPages(props) {
+  const { dispatch, classroom } = props;
+  const [refresh, onRefresh] = useRefresh(() => initialLoadPage());
+
+  useEffect(() => {
+    initialLoadPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const initialLoadPage = async () => {
+    await dispatch(classroomAct.get());
+  };
+
   return (
-    <ScrollView>
-      <ClassList
-        name="2A"
-        supervisor="Muhammad Firman"
-        place="Madinah Building"
-        total={29}
-        loading={false}
-      />
-      <ClassList name="2A" supervisor="Muhammad Firman" place="Madinah Building" total={29} />
+    <ScrollView refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refresh} />}>
+      {classroom.data.map((data, i) => (
+        <ClassList
+          key={i}
+          data={data}
+          name={data.name}
+          supervisor={data.teacher.name}
+          place={data.place}
+          total={data.total}
+          loading={classroom.isLoading}
+        />
+      ))}
     </ScrollView>
   );
 }
 
-export default ClassPages;
+const mapStateToProps = state => ({
+  classroom: state.classroom,
+});
+
+export default connect(mapStateToProps)(ClassPages);

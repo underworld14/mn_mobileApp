@@ -65,6 +65,7 @@ function HomeScreen() {
           onIndexChange={setIndex}
           initialLayout={initialLayout}
           renderTabBar={renderTabBar}
+          lazy={true}
         />
       </View>
     </SafeAreaView>
