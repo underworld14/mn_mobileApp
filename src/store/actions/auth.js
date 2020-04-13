@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import api from '../../services/api';
 import types from './types';
 
@@ -21,7 +22,16 @@ export const login = form => {
 
 export const logOut = () => {
   return (dispatch, getState) => {
-    dispatch({ type: 'LOGOUT' });
+    return new Promise(async (resolve, reject) => {
+      await AsyncStorage.clear()
+        .then(() => {
+          dispatch({ type: 'LOGOUT' });
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
+    });
   };
 };
 
