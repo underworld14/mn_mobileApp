@@ -15,6 +15,7 @@ import Divider from '../../components/divider';
 import SetPinModal from '../../components/setPinModal';
 import MySnackBar from '../../components/mySnackBar';
 import NewsModal from './newsModal';
+import ErrBottomSheet from '../../components/errorBottomSheet';
 
 import { capitalizeWord, nameAlias } from '../../utils/string';
 import MyStatusBar from '../../components/statusbarTab';
@@ -28,6 +29,7 @@ function HomeScreen(props) {
   const [pinModal, setPinModal] = useState(false);
   const [pinWarn, setPinWarn] = useState(false);
   const [newsModal, setNewsModal] = useState(0);
+  const errSheet = React.useRef();
   const { auth, dispatch, student, news } = props;
 
   useFocusEffect(
@@ -38,14 +40,18 @@ function HomeScreen(props) {
 
   useEffect(() => {
     initialLoadScreen();
-    if (!auth.userPin) {
-      setPinModal(true);
-    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initialLoadScreen = async () => {
-    await Promise.all([dispatch(newsAct.get()), dispatch(studentAct.getSummary())]);
+    await Promise.all([dispatch(newsAct.get()), dispatch(studentAct.getSummary())])
+      .then(() => {
+        if (!auth.userPin) {
+          setPinModal(true);
+        }
+      })
+      .catch(() => errSheet.current.open());
   };
 
   const registerUserPin = async pin => {
@@ -177,6 +183,7 @@ function HomeScreen(props) {
         {/* {newsModal && } */}
         <NewsModal visible={newsModal} onClose={() => setNewsModal(0)} data={news.data} />
       </Portal>
+      <ErrBottomSheet refSheet={errSheet} onClose={initialLoadScreen} />
     </SafeAreaView>
   );
 }

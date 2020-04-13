@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import useRefresh from '../../../components/hooks/useRefresh';
@@ -9,11 +9,6 @@ import { ClassList } from './listComp';
 function ClassPages(props) {
   const { dispatch, classroom } = props;
   const [refresh, onRefresh] = useRefresh(() => initialLoadPage());
-
-  useEffect(() => {
-    initialLoadPage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const initialLoadPage = async () => {
     await dispatch(classroomAct.get());

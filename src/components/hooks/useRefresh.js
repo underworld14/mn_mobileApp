@@ -5,8 +5,14 @@ function useRefresh(refreshCallback) {
 
   const onRefresh = React.useCallback(async () => {
     setRefresh(true);
-    await refreshCallback();
-    setRefresh(false);
+    await refreshCallback()
+      .then(() => {
+        setRefresh(false);
+      })
+      .catch(() => {
+        setRefresh(false);
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

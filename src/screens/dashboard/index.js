@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { View, SafeAreaView, Dimensions } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
@@ -6,19 +7,24 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Text from '../../components/elements/text';
 import MyStatusBar from '../../components/statusbarTab';
 import styles from './styles';
+import ErrorBottomSheet from '../../components/errorBottomSheet';
+
+// actions
+import * as hostelAct from '../../store/actions/hostels';
+import * as classroomAct from '../../store/actions/classroom';
 
 // tabscreen
 import ClassPages from './tabScreen/classPages';
 import HostelPages from './tabScreen/hostelPages';
 
-function HomeScreen() {
+function Dashboard(props) {
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'Kelas' },
-    { key: 'second', title: 'Asrama' },
-  ]);
+  const errSheet = React.useRef();
 
-  const initialLayout = { width: Dimensions.get('window').width };
+  useEffect(() => {
+    initialLoadPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -26,26 +32,19 @@ function HomeScreen() {
     }, []),
   );
 
+  const routes = [{ key: 'first', title: 'Kelas' }, { key: 'second', title: 'Asrama' }];
+  const initialLayout = { width: Dimensions.get('window').width };
   const renderScene = SceneMap({
     first: ClassPages,
     second: HostelPages,
   });
 
-  const renderTabBar = props => (
-    <TabBar
-      {...props}
-      activeColor="green"
-      inactiveColor="black"
-      indicatorStyle={styles.tabIndicator}
-      style={styles.tabBackColor}
-      renderLabel={({ route, focused, color }) => (
-        // eslint-disable-next-line react-native/no-inline-styles
-        <Text size={12} style={{ color, margin: 8 }}>
-          {route.title}
-        </Text>
-      )}
-    />
-  );
+  const initialLoadPage = async () => {
+    await Promise.all([
+      props.dispatch(classroomAct.get()),
+      props.dispatch(hostelAct.get()),
+    ]).catch(() => errSheet.current.open());
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -65,9 +64,9 @@ function HomeScreen() {
           onIndexChange={setIndex}
           initialLayout={initialLayout}
           renderTabBar={renderTabBar}
-          lazy={true}
         />
       </View>
+      <ErrorBottomSheet refSheet={errSheet} onClose={initialLoadPage} />
     </SafeAreaView>
   );
 }
@@ -85,4 +84,20 @@ function TotalInfo({ total, title }) {
   );
 }
 
-export default HomeScreen;
+const renderTabBar = props => (
+  <TabBar
+    {...props}
+    activeColor="green"
+    inactiveColor="black"
+    indicatorStyle={styles.tabIndicator}
+    style={styles.tabBackColor}
+    renderLabel={({ route, focused, color }) => (
+      // eslint-disable-next-line react-native/no-inline-styles
+      <Text size={12} style={{ color, margin: 8 }}>
+        {route.title}
+      </Text>
+    )}
+  />
+);
+
+export default connect()(Dashboard);

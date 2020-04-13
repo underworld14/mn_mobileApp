@@ -18,6 +18,7 @@ import illness from './menu/sakit.png';
 // general image
 import forgot from './image/not-found.png';
 import welcome from './image/client-meeting.png';
+import maintenance from './image/maintenance.png';
 
 export const logo = mnLogo;
 
@@ -40,4 +41,5 @@ export const menuIcon = {
 export const image = {
   forgot,
   welcome,
+  maintenance,
 };
