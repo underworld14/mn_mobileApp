@@ -1,18 +1,12 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Image } from 'react-native';
+import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
 
-// tab bar icons
-import { tabIcon } from '../assets';
+import BottomTab, { tabBarOptions } from './bottomTab';
 
 // public screen
 import LoginScreen from './public/login';
@@ -54,10 +48,8 @@ function AccountStackScreen() {
 const Tab = createBottomTabNavigator();
 const PublicStack = createStackNavigator();
 
-function App() {
-  const auth = useSelector(state => state.auth);
-
-  if (!auth.isLogin) {
+function App(props) {
+  if (!props.auth.isLogin) {
     return (
       <NavigationContainer>
         <PublicStack.Navigator initialRouteName="Welcome" headerMode={false}>
@@ -71,29 +63,7 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === 'Home') {
-              iconName = focused ? tabIcon.homeActive : tabIcon.homeInactive;
-            } else if (route.name === 'Dashboard') {
-              iconName = focused ? tabIcon.dashboardActive : tabIcon.dashboardInactive;
-            } else if (route.name === 'Account') {
-              iconName = focused ? tabIcon.userActive : tabIcon.userInactive;
-            }
-
-            // You can return any component that you like here!
-            return <Image source={iconName} style={{ width: wp(7), height: wp(7) }} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: '#26C281',
-          inactiveTintColor: '#464646',
-          style: { height: hp(7) },
-          labelStyle: { fontFamily: 'Poppins-Regular' },
-        }}>
+      <Tab.Navigator screenOptions={BottomTab} tabBarOptions={tabBarOptions}>
         <Tab.Screen name="Home" component={HomeStackScreen} />
         <Tab.Screen name="Dashboard" component={DashboardStackScreen} />
         <Tab.Screen name="Account" component={AccountStackScreen} />
@@ -102,4 +72,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(App);
