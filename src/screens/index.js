@@ -39,8 +39,8 @@ function DashboardStackScreen() {
 function AccountStackScreen() {
   const AccountStack = createStackNavigator();
   return (
-    <AccountStack.Navigator>
-      <AccountStack.Screen name="Dashboard" component={AccountScreen} />
+    <AccountStack.Navigator headerMode={false}>
+      <AccountStack.Screen name="Account" component={AccountScreen} />
     </AccountStack.Navigator>
   );
 }
