@@ -39,20 +39,22 @@ function HomeScreen(props) {
   );
 
   useEffect(() => {
-    initialLoadScreen();
+    initialLoadScreen().then(checkRegisteredPin);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initialLoadScreen = async () => {
-    await Promise.all([dispatch(newsAct.get()), dispatch(studentAct.getSummary())])
-      .then(() => {
-        if (!auth.userPin) {
-          setPinModal(true);
-        }
-      })
-      .catch(() => errSheet.current.open());
+    await Promise.all([dispatch(newsAct.get()), dispatch(studentAct.getSummary())]).catch(() =>
+      errSheet.current.open(),
+    );
   };
+
+  const checkRegisteredPin = React.useCallback(() => {
+    if (!auth.pin) {
+      setPinModal(true);
+    }
+  }, [auth]);
 
   const registerUserPin = async pin => {
     await dispatch(authAct.setPinUser(pin));
