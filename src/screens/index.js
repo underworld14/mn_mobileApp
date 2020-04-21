@@ -19,36 +19,19 @@ import DashboardSceeen from './dashboard';
 import AccountScreen from './account';
 import UpdateProfileScreen from './account/updateProfile';
 
-function HomeStackScreen() {
-  const HomeStack = createStackNavigator();
+function TabStack() {
+  const Tab = createBottomTabNavigator();
   return (
-    <HomeStack.Navigator headerMode={false}>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-    </HomeStack.Navigator>
+    <Tab.Navigator screenOptions={BottomTab} tabBarOptions={tabBarOptions}>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Dashboard" component={DashboardSceeen} />
+      <Tab.Screen name="Account" component={AccountScreen} />
+    </Tab.Navigator>
   );
 }
 
-function DashboardStackScreen() {
-  const DashboardStack = createStackNavigator();
-  return (
-    <DashboardStack.Navigator headerMode={false}>
-      <DashboardStack.Screen name="Dashboard" component={DashboardSceeen} />
-    </DashboardStack.Navigator>
-  );
-}
-
-function AccountStackScreen() {
-  const AccountStack = createStackNavigator();
-  return (
-    <AccountStack.Navigator headerMode={false}>
-      <AccountStack.Screen name="Account" component={AccountScreen} />
-      <AccountStack.Screen name="Update-Profile" component={UpdateProfileScreen} />
-    </AccountStack.Navigator>
-  );
-}
-
-const Tab = createBottomTabNavigator();
 const PublicStack = createStackNavigator();
+const PrivateStack = createStackNavigator();
 
 function App(props) {
   if (!props.auth.isLogin) {
@@ -65,11 +48,10 @@ function App(props) {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={BottomTab} tabBarOptions={tabBarOptions}>
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Dashboard" component={DashboardStackScreen} />
-        <Tab.Screen name="Account" component={AccountStackScreen} />
-      </Tab.Navigator>
+      <PrivateStack.Navigator initialRouteName="TabScreen" headerMode={false}>
+        <PrivateStack.Screen name="TabScreen" component={TabStack} />
+        <PrivateStack.Screen name="Update-Profile" component={UpdateProfileScreen} />
+      </PrivateStack.Navigator>
     </NavigationContainer>
   );
 }
