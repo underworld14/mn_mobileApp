@@ -51,7 +51,7 @@ function HomeScreen(props) {
   };
 
   const checkRegisteredPin = React.useCallback(() => {
-    if (!auth.pin) {
+    if (!auth.userPin) {
       setPinModal(true);
     }
   }, [auth]);

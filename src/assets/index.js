@@ -15,6 +15,13 @@ import permission from './menu/perizinan.png';
 import violation from './menu/pelanggaran.png';
 import illness from './menu/sakit.png';
 
+// account icon
+import personIcon from './icon/person-icon.png';
+import keyIcon from './icon/key-icon.png';
+import lockIcon from './icon/lock-icon.png';
+import helpIcon from './icon/help-icon.png';
+import logoutIcon from './icon/logout-icon.png';
+
 // general image
 import forgot from './image/not-found.png';
 import welcome from './image/client-meeting.png';
@@ -36,6 +43,14 @@ export const menuIcon = {
   permission,
   violation,
   illness,
+};
+
+export const accountIcon = {
+  personIcon,
+  keyIcon,
+  lockIcon,
+  helpIcon,
+  logoutIcon,
 };
 
 export const image = {

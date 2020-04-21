@@ -1,12 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SafeAreaView, View, StyleSheet } from 'react-native';
-import { Avatar, List, Checkbox } from 'react-native-paper';
+import { SafeAreaView, View, Image } from 'react-native';
+import { Avatar, List } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Feather';
 import { useFocusEffect } from '@react-navigation/native';
 
-import Text from '../../components/elements/text';
+import styles from './styles';
 import { wp } from '../../components/responsive';
+import Text from '../../components/elements/text';
 import MyStatusBar from '../../components/statusbarTab';
+import Divider from '../../components/divider';
+import { accountIcon } from '../../assets';
 
 import * as authAct from '../../store/actions/auth';
 
@@ -25,6 +29,14 @@ function Account(props) {
     props.dispatch(authAct.logOut());
   };
 
+  const credentials = props.auth.credentials;
+  const role =
+    credentials.role === 'admin'
+      ? 'Staf Pengasuhan'
+      : credentials.role === 'supervisor'
+      ? 'Pembimbing BPS'
+      : 'SuperAdmin';
+
   return (
     <SafeAreaView style={styles.container}>
       {/* header.... */}
@@ -36,67 +48,70 @@ function Account(props) {
 
       {/* profile photo */}
       <View style={[styles.profile, styles.alCenter]}>
-        <Avatar.Text size={wp(14)} label="XD" />
+        <Avatar.Text size={wp(12)} label="XD" />
         <View style={styles.profileNameWrapper}>
-          <Text size={16} type="semibold" style={styles.lSpacing}>
-            Ust. Yusril Izza Aulia
+          <Text size={17} type="semibold" style={[styles.grey]}>
+            {`Ust. ${credentials.teacher.name}`}
           </Text>
-          <Text size={12} style={styles.lSpacing}>
-            Staf BPS
+          <Text size={10} style={[styles.grey]}>
+            {credentials.email}
+          </Text>
+          <Text size={10} style={[styles.grey]}>
+            {role}
           </Text>
         </View>
       </View>
 
+      <Divider />
+
       {/* content settings */}
       <View style={styles.content}>
         <List.Section title="Akun">
-          <List.Item title="Ubah Profil" onPress={handleDevelopment} />
-          <List.Item title="Log Out" onPress={logOut} />
+          <ListItem
+            title="Ubah Profile"
+            iconSource={accountIcon.personIcon}
+            onPress={() => props.navigation.navigate('Update-Profile')}
+          />
+          <ListItem title="Log Out" iconSource={accountIcon.logoutIcon} onPress={logOut} />
         </List.Section>
         <List.Section title="Keamanan">
-          <List.Item title="Ubah Pin" onPress={handleDevelopment} />
-          <List.Item title="Ubah Password" onPress={handleDevelopment} />
+          <ListItem
+            title="Ubah Pin"
+            iconSource={accountIcon.keyIcon}
+            onPress={handleDevelopment}
+          />
+          <ListItem
+            title="Ubah Password"
+            iconSource={accountIcon.lockIcon}
+            onPress={handleDevelopment}
+          />
         </List.Section>
         <List.Section title="Tentang">
-          <List.Item title="Pusat Bantuan" onPress={handleDevelopment} />
+          <ListItem
+            title="Pusat Bantuan"
+            iconSource={accountIcon.helpIcon}
+            onPress={handleDevelopment}
+          />
         </List.Section>
       </View>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    paddingHorizontal: '5%',
-  },
-  toCenter: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  jusCenter: {
-    justifyContent: 'center',
-  },
-  alCenter: {
-    alignItems: 'center',
-  },
-  header: {
-    flex: 0.8,
-  },
-  profile: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  lSpacing: {
-    letterSpacing: 1,
-  },
-  profileNameWrapper: {
-    marginLeft: wp(4),
-  },
-  content: {
-    flex: 7,
-  },
+function ListItem({ title, iconSource, onPress }) {
+  return (
+    <List.Item
+      title={title}
+      onPress={onPress}
+      left={() => <Image source={iconSource} style={styles.iconList} />}
+      // eslint-disable-next-line react-native/no-inline-styles
+      right={() => <Icon name="arrow-right" size={20} style={{ marginVertical: 8 }} />}
+    />
+  );
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth,
 });
 
-export default connect()(Account);
+export default connect(mapStateToProps)(Account);

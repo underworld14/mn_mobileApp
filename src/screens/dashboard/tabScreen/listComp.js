@@ -20,10 +20,10 @@ function ClassList({ name, supervisor, place, total, loading }) {
   return (
     <View style={styles.listData}>
       <View style={styles.alCenter}>
-        <Text size={18} style={styles.assistantL}>
+        <Text size={14} style={styles.assistantL}>
           Kelas
         </Text>
-        <Text size={20} type="semibold">
+        <Text size={14} type="semibold">
           {name}
         </Text>
       </View>
@@ -40,7 +40,7 @@ function ClassList({ name, supervisor, place, total, loading }) {
       </View>
 
       <View style={styles.alCenter}>
-        <Text size={20} type="semibold" style={styles.txtPrimary}>
+        <Text size={18} type="semibold" style={styles.txtPrimary}>
           {total}
         </Text>
         <Text style={[styles.assistantL, styles.txtPrimary]}>Jumlah Siswa</Text>
@@ -72,7 +72,7 @@ function HostelList({ name, supervisor, total, loading }) {
       </View>
 
       <View style={styles.alCenter}>
-        <Text size={20} type="semibold" style={styles.txtPrimary}>
+        <Text size={18} type="semibold" style={styles.txtPrimary}>
           {total}
         </Text>
         <Text style={[styles.assistantL, styles.txtPrimary]}>Jumlah Siswa</Text>

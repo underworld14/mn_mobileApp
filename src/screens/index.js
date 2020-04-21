@@ -17,6 +17,7 @@ import ForgotScreen from './public/forgot';
 import HomeScreen from './home';
 import DashboardSceeen from './dashboard';
 import AccountScreen from './account';
+import UpdateProfileScreen from './account/updateProfile';
 
 function HomeStackScreen() {
   const HomeStack = createStackNavigator();
@@ -41,6 +42,7 @@ function AccountStackScreen() {
   return (
     <AccountStack.Navigator headerMode={false}>
       <AccountStack.Screen name="Account" component={AccountScreen} />
+      <AccountStack.Screen name="Update-Profile" component={UpdateProfileScreen} />
     </AccountStack.Navigator>
   );
 }
