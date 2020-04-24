@@ -25,6 +25,10 @@ function Account(props) {
     alert('Sedang tahap Development');
   };
 
+  const initialLoadPage = async () => {
+    await props.dispatch(authAct.getMe());
+  };
+
   const logOut = () => {
     props.dispatch(authAct.logOut());
   };
@@ -48,7 +52,11 @@ function Account(props) {
 
       {/* profile photo */}
       <View style={[styles.profile, styles.alCenter]}>
-        <Avatar.Text size={wp(12)} label="XD" />
+        {credentials.teacher.photo ? (
+          <Avatar.Image size={wp(12)} source={{ uri: credentials.teacher.photo }} />
+        ) : (
+          <Avatar.Text size={wp(12)} label="XD" />
+        )}
         <View style={styles.profileNameWrapper}>
           <Text size={17} type="semibold" style={[styles.grey]}>
             {`Ust. ${credentials.teacher.name}`}
@@ -78,7 +86,7 @@ function Account(props) {
           <ListItem
             title="Ubah Pin"
             iconSource={accountIcon.keyIcon}
-            onPress={handleDevelopment}
+            onPress={initialLoadPage}
           />
           <ListItem
             title="Ubah Password"

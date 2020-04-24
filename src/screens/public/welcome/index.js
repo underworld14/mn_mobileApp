@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, View, StyleSheet, Image, ActivityIndicator } from 'react-native';
-// import { Text } from 'react-native-paper';
+import AsyncStorage from '@react-native-community/async-storage';
 import { logo } from '../../../assets';
 import Text from '../../../components/elements/text';
 import MyStatusBar from '../../../components/statusbar';
 
 function Index(props) {
   useEffect(() => {
+    AsyncStorage.removeItem('root');
     setTimeout(() => {
       props.navigation.navigate('Login');
-    }, 3000);
+    }, 2000);
   }, [props.navigation]);
 
   return (

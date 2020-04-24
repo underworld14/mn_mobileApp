@@ -1,18 +1,20 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { wp } from './responsive';
 import Text from './elements/text';
 
-function backHeader({ action }) {
+function backHeader({ action, title }) {
   return (
-    <TouchableOpacity style={styles.backContainer} onPress={action}>
-      <Icon name="arrow-left" size={wp(6)} />
+    <View style={styles.backContainer}>
+      <TouchableOpacity onPress={action}>
+        <Icon name="arrow-left" size={wp(6)} />
+      </TouchableOpacity>
       <Text size={14} type="semibold" style={styles.text}>
-        Kembali
+        {title ? title : 'Kembali'}
       </Text>
-    </TouchableOpacity>
+    </View>
   );
 }
 

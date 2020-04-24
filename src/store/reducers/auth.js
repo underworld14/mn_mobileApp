@@ -2,17 +2,31 @@ let initialState = {
   isLoading: false,
   isLogin: false,
   userPin: '',
+  token: '',
   credentials: {},
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN_PENDING': {
+    case 'LOADING': {
       return {
         ...state,
         isLoading: true,
       };
     }
+
+    case 'LOADING_FALSE': {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+
+    case 'SET_TOKEN':
+      return {
+        ...state,
+        token: action.payload,
+      };
 
     case 'LOGIN_FULFILLED':
       return {
@@ -47,6 +61,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userPin: '',
+      };
+
+    case 'UPDATE_USER_FULFILLED':
+      return {
+        ...state,
+        isLoading: false,
+      };
+
+    case 'GET_ME_FULFILLED':
+      return {
+        ...state,
+        isLoading: false,
+        credentials: action.payload,
       };
 
     default: {
